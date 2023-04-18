@@ -1,9 +1,19 @@
 import {useState} from 'react'
-import { Outlet, Link } from "react-router-dom"
+import { Outlet, Link, useLoaderData } from "react-router-dom"
+
+// Smart Contract DB format
+import {getChannels} from '../deApp'
+
+export async function loader(){
+  const channels = await getChannels()
+  return {channels};
+}
 
 
 
 export default function Channel() {
+  const {channels} = useLoaderData()
+
 
   const channelHandler = async (channel) => {
     console.log(`the channel ID = ${channel}`)
@@ -46,7 +56,25 @@ export default function Channel() {
         </div>
 
         <nav>
-          <ul>
+
+          {
+            channels.length ? (
+              <ul>
+                {channels.map((channel) =>(
+                  <li key={channel.id}>
+                    <Link to={`/app/channel/${channel.id}`} >
+                      {channel.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            ): (
+              <p>No channels</p>
+            )
+          }
+
+
+          {/* <ul>
             <li>
               <Link href={`/app/channel/1`}>General</Link>
             </li>
@@ -56,7 +84,7 @@ export default function Channel() {
             <li>
               <Link href={`/app/channel/3`}>jobs</Link>
             </li>
-          </ul>
+          </ul> */}
         </nav>
 
       </div>

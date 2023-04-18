@@ -4,19 +4,12 @@ import { ethers } from 'ethers';
 import { useEffect, useState } from "react";
 
 
-export async function loader(){
-  
-  
-  
-
-}
 
 
 
 
 export default function Root() {
-
-
+  
   const [user, setUser] = useState("")
 
   const handleConnect = async () => {
@@ -25,23 +18,21 @@ export default function Root() {
     setUser(account)
   }
 
-
   const loadBlockchainData = async () => {
     handleConnect()
-    
-    
-
-
   }
 
   useEffect(() => {
-    loadBlockchainData()
-
+    
     window.ethereum.on('accountsChanged', async () => {
       window.location.reload()
     })
+    
+    return () => {
+      loadBlockchainData()
+    }
 
-  },[user])
+  },[])
 
   return (
     <>

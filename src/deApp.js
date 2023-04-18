@@ -13,8 +13,23 @@ const dePortal = new ethers.Contract(contractAddress, DePortal, provider);
 
 // Create Channel
 
+
 // Mint / Join channel
 
 // Get channel by ID
+
+// Get channels
+export async function getChannels() {
+  const channels = []
+  const totalChannels = await dePortal.totalChannels()
+
+  for(let i = 1; i <= totalChannels; i++) {
+    const channel = await dePortal.getChannel(i)
+    channels.push(channel)
+  }
+
+  return channels
+
+}
 
 
