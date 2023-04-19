@@ -1,5 +1,5 @@
-import {useState} from 'react'
-import { Outlet, Link, useLoaderData, Form, redirect } from "react-router-dom"
+import {useEffect} from 'react'
+import { Outlet, NavLink, useLoaderData, Form, redirect } from "react-router-dom"
 
 // Smart Contract DB format
 import {getChannels, createChannel} from '../deApp'
@@ -9,12 +9,13 @@ export async function loader(){
   return {channels};
 }
 
-export async function action({request, params}) {
+export async function action({request}) {
   const formData = await request.formData();
   const updates = Object.fromEntries(formData);
   let result = await createChannel(updates.channelName, updates.channelCost)
   console.log(result)
-  return redirect(`/app/channel/${result.length}`)
+  // return redirect(`/app/channel/${result.length}`)
+  return redirect(`/app/channel/`)
 }
 
 
@@ -29,7 +30,6 @@ export default function Channel() {
         <h2>Channels</h2>
 
         <div className='channel-parms'>
-
           <Form method="post">
             <input name="channelName" placeholder="Channel Name"/>
             <input type="number" name="channelCost" placeholder="cost in eth"/>
@@ -38,15 +38,14 @@ export default function Channel() {
         </div>
 
         <nav>
-
           {
             channels.length ? (
               <ul>
                 {channels.map((channel) =>(
                   <li key={channel.id}>
-                    <Link to={`/app/channel/${channel.id}`} >
+                    <NavLink to={`/app/channel/${channel.id}`} >
                       {channel.name}
-                    </Link>
+                    </NavLink>
                   </li>
                 ))}
               </ul>

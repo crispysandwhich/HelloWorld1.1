@@ -10,9 +10,9 @@ import Intro from './route/intro'
 import ErrorPage from './error'
 import Root, {loader as rootLoader} from './route/root'
 import Users from './route/user'
-import Channel, {loader as channelLoader, action as channelAction} from './route/Channel'
+import Channel, {loader as channelLoader, action as channelAction, action} from './route/Channel'
 import Contact from './route/contact'
-import ChatBox from './route/Chatbox'
+import ChatBox,{loader as chatBoxLoader} from './route/Chatbox'
 import Index from './route/Index'
 
 const router = createBrowserRouter([
@@ -45,7 +45,8 @@ const router = createBrowserRouter([
           {index: true, element: <Index />},
           {
             path: '/app/channel/:id',
-            element: <ChatBox />
+            element: <ChatBox />,
+            loader: chatBoxLoader
           }
         ]
       },
