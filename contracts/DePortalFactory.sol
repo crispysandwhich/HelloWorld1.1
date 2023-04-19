@@ -32,7 +32,7 @@ contract DePortalFactory is ERC721 {
     owner = msg.sender;
   }
 
-  function createChannel (string memory _name, uint256 _cost) public payable {
+  function createChannel (string memory _name, uint256 _cost) public {
     totalChannels++;
     channels[totalChannels] = Channel(totalChannels, _name, _cost);
   }

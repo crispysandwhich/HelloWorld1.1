@@ -4,11 +4,15 @@ import { ethers } from 'ethers';
 import DePortal from './abis/DePortalFactory.json'
 
 // Contract Address
-const contractAddress = '0x0165878A594ca255338adfa4d48449f69242Eb8F'
+const contractAddress = '0x80eB8BaE2dC52806EAbfc0981137C63BF968F06d'
 
 const provider = new ethers.providers.Web3Provider(window.ethereum)
 
 const dePortal = new ethers.Contract(contractAddress, DePortal, provider);
+
+const DEFAULT_SEND_OPTIONS = {
+  gas: 6000000
+};
 
 
 const tokens = (n) => {
@@ -19,7 +23,8 @@ const tokens = (n) => {
 export async function createChannel(name, cost) {
   console.log(name, cost, 'in db')
   const account = await handleConnect()
-  const signer = provider.getSigner(account)
+  const signer = provider.getSigner()
+  console.log(signer, 'in db')
 
   const transaction = await dePortal.connect(signer).createChannel(name, tokens(cost))
   await transaction.wait()
@@ -27,6 +32,11 @@ export async function createChannel(name, cost) {
 }
 
 // Mint / Join channel
+export async function mintAccess(channelID) {
+
+
+
+}
 
 // Get channel by ID
 
