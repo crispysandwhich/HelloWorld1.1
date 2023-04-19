@@ -1,12 +1,20 @@
 import {useState} from 'react'
-import { Outlet, Link, useLoaderData } from "react-router-dom"
+import { Outlet, Link, useLoaderData, Form, redirect } from "react-router-dom"
 
 // Smart Contract DB format
-import {getChannels} from '../deApp'
+import {getChannels, createChannel} from '../deApp'
 
 export async function loader(){
   const channels = await getChannels()
   return {channels};
+}
+
+export async function action({request, params}) {
+  const formData = await request.formData();
+  const updates = Object.fromEntries(formData);
+  let result = await createChannel(updates.channelName, updates.channelCost)
+  console.log(result)
+  return redirect(`/app/channel/${result.length}`)
 }
 
 
@@ -15,44 +23,18 @@ export default function Channel() {
   const {channels} = useLoaderData()
 
 
-  const channelHandler = async (channel) => {
-    console.log(`the channel ID = ${channel}`)
-
-    // Calls smart contract to check if channel id matches the data in smart contract
-
-    // If user has already joined the channel it will send them to the chatbox 
-    // If not it will create a transaction and then send them to the chatbox
-
-    return redirect(`/app/user/channel/${channel}`)
-  }
-
   return (
     <section id="server">
       <div id="channel">
         <h2>Channels</h2>
 
         <div className='channel-parms'>
-          <form id="search-form" role="search">
-            <input
-              id="q"
-              aria-label="Search contacts"
-              placeholder="Search"
-              type="search"
-              name="q"
-            />
-            <div
-              id="search-spinner"
-              aria-hidden
-              hidden={true}
-            />
-            <div
-              className="sr-only"
-              aria-live="polite"
-            ></div>
-          </form>
-          <form method="post">
+
+          <Form method="post">
+            <input name="channelName" placeholder="Channel Name"/>
+            <input type="number" name="channelCost" placeholder="cost in eth"/>
             <button type="submit">New</button>
-          </form>
+          </Form>
         </div>
 
         <nav>

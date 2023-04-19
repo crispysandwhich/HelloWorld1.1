@@ -3,24 +3,17 @@ import { NavLink, Outlet, useLoaderData } from "react-router-dom"
 import { ethers } from 'ethers';
 import { useEffect, useState } from "react";
 
+import { handleConnect } from "../deApp";
 
-
-
-
+export async function loader(){
+  const account = await handleConnect()
+  return {account};
+}
 
 export default function Root() {
-  
-  const [user, setUser] = useState("")
+  const {account} = useLoaderData()
 
-  const handleConnect = async () => {
-    const accounts = await window.ethereum.request({method: 'eth_requestAccounts'});
-    const account = ethers.utils.getAddress(accounts[0])
-    setUser(account)
-  }
 
-  const loadBlockchainData = async () => {
-    handleConnect()
-  }
 
   useEffect(() => {
     
@@ -28,9 +21,6 @@ export default function Root() {
       window.location.reload()
     })
     
-    return () => {
-      loadBlockchainData()
-    }
 
   },[])
 
@@ -45,10 +35,10 @@ export default function Root() {
         </nav>
 
         {
-          user ? (
-            <p>{user.slice(0,6) + '...' + user.slice(38,42)}</p>
+          account ? (
+            <p>{account.slice(0,6) + '...' + account.slice(38,42)}</p>
           ): (
-            <button onClick={handleConnect}>connect</button>
+            <p>Get Freaking Metamask</p>
           )
         }
 

@@ -8,9 +8,9 @@ import './index.css'
 // Routes
 import Intro from './route/intro'
 import ErrorPage from './error'
-import Root from './route/root'
+import Root, {loader as rootLoader} from './route/root'
 import Users from './route/user'
-import Channel, {loader as channelLoader} from './route/Channel'
+import Channel, {loader as channelLoader, action as channelAction} from './route/Channel'
 import Contact from './route/contact'
 import ChatBox from './route/Chatbox'
 import Index from './route/Index'
@@ -24,6 +24,7 @@ const router = createBrowserRouter([
   { 
     path: '/app',
     element: <Root />,
+    loader: rootLoader,
     children: [
       {index: true, element: <Index />},
       { 
@@ -39,7 +40,9 @@ const router = createBrowserRouter([
         path: '/app/channel/',
         element: <Channel />,
         loader: channelLoader,
+        action: channelAction,
         children: [
+          {index: true, element: <Index />},
           {
             path: '/app/channel/:id',
             element: <ChatBox />
