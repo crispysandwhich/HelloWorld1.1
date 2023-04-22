@@ -43,6 +43,13 @@ export default function Chatbox() {
   },[joined, channel])
 
 
+  useEffect(() => {
+    socket.on('message', () => {
+      
+    })
+  }, [])
+
+
 
 
 
