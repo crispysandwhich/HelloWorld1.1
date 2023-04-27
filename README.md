@@ -1,16 +1,10 @@
-# ghostieve
+# NO Name
 
-This is going to hopefully end up being the project ive been wanting to try and create since 2019. 
-it looks like shit
-I feel like shit 
-im still working all around until completion.
+I am going to be going at this towards a different direction from before. I feel like everything is kinda of all over the place not only with the project but honestly just everywhere. I am going to try and structure this a little bit better but also end up doing a few things different. For the momment this is what is going to happen.
 
-I am using vite this time
-testing and planning smart contract
-working on a better layout 
-trying to implement server functionality.
+- [] finish the Style and responsive part
+= [] configure a db for certain material and launch it as an API.
+= [] create a few smart contracts and link it together with app 
+- [] connect to nervos network 
 
-
-This is going to be good hopefully finish within the week and thats if I will have the time and brain power / mentalitity to do so.
-
-cant wait to show this though so stay tuned
+- [] Future implementation for either app or program or both.
